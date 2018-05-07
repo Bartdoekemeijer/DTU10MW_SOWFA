@@ -1,0 +1,148 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.6                                   |
+|   \\  /    A nd           | Web:      http://www.OpenFOAM.org               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      turbineProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+// Most info from: http://orbit.dtu.dk/files/55645274/The_DTU_10MW_Reference_Turbine_Christian_Bak.pdf
+// and from FAST files provided by DTU InnWind/CENER
+
+NumBl                   3; 		// Copied from "DTU_10MW_ElastoDyn.dat"
+TipRad                  89.2; 	// Copied from "DTU_10MW_ElastoDyn.dat"
+HubRad                  2.8; 	// Copied from "DTU_10MW_ElastoDyn.dat"
+UndSling                0.0;  	// Copied from "DTU_10MW_ElastoDyn.dat"
+OverHang               -7.1; 	// Copied from "DTU_10MW_ElastoDyn.dat"
+TowerHt                115.63; 	// Copied from "DTU_10MW_ElastoDyn.dat"
+Twr2Shft                2.75; 	// Copied from "DTU_10MW_ElastoDyn.dat"
+ShftTilt               -5.0; 	// Copied from "DTU_10MW_ElastoDyn.dat"
+PreCone               (-2.5 -2.5 -2.5);  // Copied from "DTU_10MW_ElastoDyn.dat"
+GBRatio                50.0; 	// Copied from "DTU_10MW_ElastoDyn.dat"
+GBEfficiency            1.0; 	// Copied from "DTU_10MW_ElastoDyn.dat"
+GenEfficiency           1.0;    // Copied from "DTU_10MW_ServoDyn.dat"
+
+GenIner               1500.5; // Copied from "DTU_10MW_ElastoDyn.dat"
+HubIner               325.6709E3; // Copied from "DTU_10MW_ElastoDyn.dat"
+
+// According to DTU Wind Energy Report-I-0092: scaling factor for mass is sf^3. Scaling factor for 1st moment of inertia is sf^4, with sf the geometric scaling factor sf = sqrt(10/5). 
+// Blade mass for NREL 5MW = 17,740 kg, for DTU 10MW = 41,000 kg. sf = 1.32 (theoretical: sqrt(2) = 1.41). NREL 5MW inertia = 11.776047E6, then DTU 10MW inertia = 1.32^4*11.8E6 = 35.8E6.
+// Theoretically: sf = sqrt(2), then DTU 10MW inertia = sqrt(2)^4 * 11.8E6 = 47.2E6. Pick mean value: 41.5E6. VERY ROUGH ESTIMATE.
+BladeIner             41.5E6; // ROUGH ESTIMATE: SEE ABOVE
+
+GenTorqueControllerType "fiveRegion";
+NacYawControllerType      "none";
+BladePitchControllerType    "none";
+RatedRotSpeed         12.7; // This is set to 16.0 for NREL 5MW, while true rated RPM = 12.1. For DTU 10MW, true is 9.6 RPM. To scale, this leads to 12.7 RPM, approximately?
+RotSpeedLimiter             false;
+GenTorqueRateLimiter        true;
+NacYawRateLimiter           true;
+BladePitchRateLimiter       false;
+SpeedFilterCornerFrequency  2.5132741; // From Delft Research Controller (Github)
+
+
+GenTorqueControllerParams
+{
+    CutInGenSpeed           300.0; // 670.0 For NREL 5MW: 97 (GB ratio) x 6.9 (cut-in rotor RPM) = 669.3 RPM. DTU 10MW: 50.0 x 6.0 RPM = 300 RPM
+    RatedGenSpeed           480.0; // 1173.7 for NREl 5MW: 97 x 12.1 RPM = 1173.7 RPM. DTU 10MW: 50 x 9.6 RPM = 480.0 RPM
+    Region2StartGenSpeed    300.0; // ??? NREL 5MW: 871.0
+    Region2EndGenSpeed      480.0; // ??? NREL 5MW: 1161.963
+    CutInGenTorque          0.0;    // From Delft Research Controller (Github)
+    RatedGenTorque           198943.6; // From Delft Research Controller (Github), For NREL 5MW: 43.09355E3
+    RateLimitGenTorque       150000.0; // From Delft Research Controller (Github), For NREL 5MW: 15.0E3
+    KGen                     0.0317; // From Delft Research Controller (Github), For NREL 5MW: 2.55764E-2;
+    GenTorqueControllerRelax     1.0;
+}
+
+NacYawControllerParams
+{
+    RateLimitNacYaw               2.0;
+}
+
+
+BladePitchControllerParams
+{
+	// Not so relevant right now due to no pitch control
+    PitchK    6.3;
+    PitchMin  0; 
+    PitchMax    90.0;
+    PitchControlKP      0.01883; 
+    PitchControlKI             0.00807;
+    PitchControlKD             0.0;
+    RateLimitBladePitch        10.0; // From Delft Research Controller (Github)
+}
+
+
+
+//BladePitchControllerParams
+//{
+//    PitchControlStartPitch    0.0;
+//    PitchControlEndPitch      7.6;
+//    PitchControlStartSpeed    15.77;
+//    PitchControlEndSpeed      16.0;
+//    RateLimitBladePitch             4.5;
+//}
+
+
+
+// Copied from "DTU_10MW_RWT_AeroDyn.dat"
+Airfoils
+(
+    "Cylinder.dat"
+    "FFA_W3_241.dat"
+    "FFA_W3_301.dat"  
+    "FFA_W3_360.dat"  
+    "FFA_W3_480.dat"  
+    "FFA_W3_600.dat"  
+);
+
+
+// Copied from "DTU_10MW_RWT_AeroDyn.dat"
+BladeData
+(
+//  radius(m)   c(m)     twist(deg) airfoil 
+	(4.8		5.38		14.49106	0)
+	(7.512		5.422947	14.424209	0)
+	(9.119		5.503171	14.260414	0)
+	(10.275		5.577011	14.043888	1)
+	(11.658		5.678866	13.581343	1)
+	(13.258		5.802144	12.908756	1)
+	(15.068		5.937015	11.908994	1)
+	(17.075		6.063689	10.680366	2)
+	(19.267		6.157123	9.479599	2)
+	(21.633		6.201273	8.385097	3)
+	(24.156		6.191868	7.60694		3)
+	(26.823		6.128953	6.957972	3)
+	(29.617		6.013883	6.369216	4)
+	(32.521		5.85419		5.809149	4)
+	(35.519		5.657992	5.254826	4)
+	(38.591		5.43481		4.69118		4)
+	(41.72		5.190131	4.087893	5)
+	(44.886		4.929373	3.44539		5)
+	(48.072		4.658367	2.790276	5)
+	(51.257		4.383529	2.125135	5)
+	(54.423		4.110851	1.481714	5)
+	(57.55		3.844928	0.86834		5)
+	(60.62		3.588651	0.294717	5)
+	(63.615		3.344616	-0.221191	5)
+	(66.516		3.115337	-0.704843	5)
+	(69.306		2.902838	-1.120529	5)
+	(71.968		2.707497	-1.517145	5)
+	(74.487		2.529161	-1.876009	5)
+	(76.847		2.364962	-2.210462	5)
+	(79.034		2.20011		-2.520387	5)
+	(81.034		2.018238	-2.797971	5)
+	(82.837		1.811887	-3.032812	5)
+	(84.431		1.536297	-3.220965	5)
+	(85.806		1.1384		-3.369622	5)
+	(86.955		1.1384		-3.42796	5)
+	(87.87		1.1384		-3.42796	5)
+	(88.546		1.1384		-3.42796	5)
+);

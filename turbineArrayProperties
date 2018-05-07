@@ -1,0 +1,44 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.6                                   |
+|   \\  /    A nd           | Web:      http://www.OpenFOAM.org               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      turbineProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+globalProperties
+{
+    outputControl       "timeStep";
+    outputInterval       1.0;
+}
+
+turbine0
+{
+    turbineType         "DTU10MWRef";
+    baseLocation        (1500.0 1500.0 0.0);
+    nRadial              64; // Unsure
+    azimuthMaxDis        2.0; // Unsure
+    nAvgSector           1; // Unsure
+    pointDistType       "uniform"; // From turbineArrayProperties (OpenFAST)
+    pointInterpType     "linear"; // From turbineArrayProperties (OpenFAST)
+    bladeUpdateType     "oldPosition"; // From turbineArrayProperties (OpenFAST)
+    epsilon              20.0; // Should be twice the cell size
+    forceScalar          1.0; // Unsure
+    inflowVelocityScalar 0.94; // Unsure
+    tipRootLossCorrType "Glauert"; // Unsure
+    rotationDir         "cw"; // From turbineArrayProperties (OpenFAST)
+    Azimuth              0.0; // From turbineArrayProperties (OpenFAST)
+    RotSpeed             7.2; // From turbineArrayProperties (OpenFAST)
+    TorqueGen            100000.0; // Unsure
+    Pitch                0.0; // From turbineArrayProperties (OpenFAST)
+    NacYaw               225.0; 
+    fluidDensity         1.225; // From turbineArrayProperties (OpenFAST)
+}
