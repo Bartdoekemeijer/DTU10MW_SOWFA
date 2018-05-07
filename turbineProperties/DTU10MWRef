@@ -16,49 +16,45 @@ FoamFile
 // Most info from: http://orbit.dtu.dk/files/55645274/The_DTU_10MW_Reference_Turbine_Christian_Bak.pdf
 // and from FAST files provided by DTU InnWind/CENER
 
-NumBl                   3; 		// Copied from "DTU_10MW_ElastoDyn.dat"
-TipRad                  89.2; 	// Copied from "DTU_10MW_ElastoDyn.dat"
-HubRad                  2.8; 	// Copied from "DTU_10MW_ElastoDyn.dat"
-UndSling                0.0;  	// Copied from "DTU_10MW_ElastoDyn.dat"
-OverHang               -7.1; 	// Copied from "DTU_10MW_ElastoDyn.dat"
-TowerHt                115.63; 	// Copied from "DTU_10MW_ElastoDyn.dat"
-Twr2Shft                2.75; 	// Copied from "DTU_10MW_ElastoDyn.dat"
-ShftTilt               -5.0; 	// Copied from "DTU_10MW_ElastoDyn.dat"
-PreCone               (-2.5 -2.5 -2.5);  // Copied from "DTU_10MW_ElastoDyn.dat"
-GBRatio                50.0; 	// Copied from "DTU_10MW_ElastoDyn.dat"
-GBEfficiency            1.0; 	// Copied from "DTU_10MW_ElastoDyn.dat"
-GenEfficiency           1.0;    // Copied from "DTU_10MW_ServoDyn.dat"
+NumBl                   3; 		// Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+TipRad                  89.2; 	// Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+HubRad                  2.8; 	// Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+UndSling                0.0;  	// Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+OverHang               -7.1; 	// Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+TowerHt                115.63; 	// Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+Twr2Shft                2.75; 	// Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+ShftTilt               -5.0; 	// Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+PreCone               (-2.5 -2.5 -2.5);  // Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+GBRatio                50.0; 	// Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+GBEfficiency            1.0; 	// Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+GenEfficiency           1.0;    // Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
 
-GenIner               1500.5; // Copied from "DTU_10MW_ElastoDyn.dat"
-HubIner               325.6709E3; // Copied from "DTU_10MW_ElastoDyn.dat"
+GenIner               1500.5;     // Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+HubIner               325.6709E3; // Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
+BladeIner             45.64E6; // Output of ElastoDyn for OpenFAST simulation ("Second mass moment")
 
-// According to DTU Wind Energy Report-I-0092: scaling factor for mass is sf^3. Scaling factor for 1st moment of inertia is sf^4, with sf the geometric scaling factor sf = sqrt(10/5). 
-// Blade mass for NREL 5MW = 17,740 kg, for DTU 10MW = 41,000 kg. sf = 1.32 (theoretical: sqrt(2) = 1.41). NREL 5MW inertia = 11.776047E6, then DTU 10MW inertia = 1.32^4*11.8E6 = 35.8E6.
-// Theoretically: sf = sqrt(2), then DTU 10MW inertia = sqrt(2)^4 * 11.8E6 = 47.2E6. Pick mean value: 41.5E6. VERY ROUGH ESTIMATE.
-BladeIner             41.5E6; // ROUGH ESTIMATE: SEE ABOVE
-
-GenTorqueControllerType "fiveRegion";
-NacYawControllerType      "none";
-BladePitchControllerType    "none";
-RatedRotSpeed         12.7; // This is set to 16.0 for NREL 5MW, while true rated RPM = 12.1. For DTU 10MW, true is 9.6 RPM. To scale, this leads to 12.7 RPM, approximately?
+GenTorqueControllerType     "fiveRegion";
+NacYawControllerType        "none";
+BladePitchControllerType    "PID";
+RatedRotSpeed         		9.6; // From paper/description
 RotSpeedLimiter             false;
 GenTorqueRateLimiter        true;
 NacYawRateLimiter           true;
 BladePitchRateLimiter       false;
-SpeedFilterCornerFrequency  2.5132741; // From Delft Research Controller (Github)
+SpeedFilterCornerFrequency  2.5; // From Delft Research Controller (Github)
 
 
 GenTorqueControllerParams
 {
-    CutInGenSpeed           300.0; // 670.0 For NREL 5MW: 97 (GB ratio) x 6.9 (cut-in rotor RPM) = 669.3 RPM. DTU 10MW: 50.0 x 6.0 RPM = 300 RPM
-    RatedGenSpeed           480.0; // 1173.7 for NREl 5MW: 97 x 12.1 RPM = 1173.7 RPM. DTU 10MW: 50 x 9.6 RPM = 480.0 RPM
-    Region2StartGenSpeed    300.0; // ??? NREL 5MW: 871.0
-    Region2EndGenSpeed      480.0; // ??? NREL 5MW: 1161.963
-    CutInGenTorque          0.0;    // From Delft Research Controller (Github)
-    RatedGenTorque           198943.6; // From Delft Research Controller (Github), For NREL 5MW: 43.09355E3
-    RateLimitGenTorque       150000.0; // From Delft Research Controller (Github), For NREL 5MW: 15.0E3
-    KGen                     0.0317; // From Delft Research Controller (Github), For NREL 5MW: 2.55764E-2;
-    GenTorqueControllerRelax     1.0;
+    CutInGenSpeed           200.0;     // Suggested by S. Mulders from Delft Research Controller
+    RatedGenSpeed           480.0;     // DTU 10MW: 50 x 9.6 RPM = 480.0 RPM (1173.7 for NREl 5MW: 97 x 12.1 RPM = 1173.7 RPM)
+    Region2StartGenSpeed    300.0;     // DTU 10MW: 50 x 6.0 RPM = 300 RPM (670.0 For NREL 5MW: 97 (GB ratio) x 6.9 (cut-in rotor RPM) = 669.3 RPM)
+    Region2EndGenSpeed      405.0;     // Suggested by S. Mulders from Delft Research Controller
+    CutInGenTorque          0.0;       // From Delft Research Controller (Github)
+    RatedGenTorque          198943.6;  // From Delft Research Controller (Github), For NREL 5MW: 43.09355E3
+    RateLimitGenTorque      150000.0;  // From Delft Research Controller (Github), For NREL 5MW: 15.0E3
+    KGen                    0.0317;    // From Delft Research Controller (Github), For NREL 5MW: 2.55764E-2;
+    GenTorqueControllerRelax   1.0;
 }
 
 NacYawControllerParams
@@ -69,42 +65,30 @@ NacYawControllerParams
 
 BladePitchControllerParams
 {
-	// Not so relevant right now due to no pitch control
-    PitchK    6.3;
-    PitchMin  0; 
-    PitchMax    90.0;
-    PitchControlKP      0.01883; 
-    PitchControlKI             0.00807;
-    PitchControlKD             0.0;
-    RateLimitBladePitch        10.0; // From Delft Research Controller (Github)
+    PitchK      25.0; // From Delft Research Controller (Github)
+    PitchMin    0;    // Suggested by S. Mulders from Delft Research Controller
+    PitchMax    90.0; // Suggested by S. Mulders from Delft Research Controller
+    PitchControlKP       0.0105; // Suggested by S. Mulders from Delft Research Controller
+    PitchControlKI       0.0028; // Suggested by S. Mulders from Delft Research Controller
+    PitchControlKD       0.0;    // Suggested by S. Mulders from Delft Research Controller
+    RateLimitBladePitch  10.0;   // From Delft Research Controller (Github)
 }
 
 
 
-//BladePitchControllerParams
-//{
-//    PitchControlStartPitch    0.0;
-//    PitchControlEndPitch      7.6;
-//    PitchControlStartSpeed    15.77;
-//    PitchControlEndSpeed      16.0;
-//    RateLimitBladePitch             4.5;
-//}
-
-
-
-// Copied from "DTU_10MW_RWT_AeroDyn.dat"
+// Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
 Airfoils
 (
     "Cylinder.dat"
     "FFA_W3_241.dat"
-    "FFA_W3_301.dat"  
-    "FFA_W3_360.dat"  
-    "FFA_W3_480.dat"  
-    "FFA_W3_600.dat"  
+    "FFA_W3_301.dat"
+    "FFA_W3_360.dat"
+    "FFA_W3_480.dat"
+    "FFA_W3_600.dat"
 );
 
 
-// Copied from "DTU_10MW_RWT_AeroDyn.dat"
+// Copied from the OpenFAST model ("DTU_10MW_ElastoDyn.dat")
 BladeData
 (
 //  radius(m)   c(m)     twist(deg) airfoil 
