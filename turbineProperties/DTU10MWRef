@@ -40,7 +40,7 @@ RatedRotSpeed         		9.6; // From paper/description
 RotSpeedLimiter             false;
 GenTorqueRateLimiter        true;
 NacYawRateLimiter           true;
-BladePitchRateLimiter       false;
+BladePitchRateLimiter       true;
 SpeedFilterCornerFrequency  2.5; // From Delft Research Controller (Github)
 
 
@@ -53,7 +53,7 @@ GenTorqueControllerParams
     CutInGenTorque          0.0;       // From Delft Research Controller (Github)
     RatedGenTorque          198943.6;  // From Delft Research Controller (Github), For NREL 5MW: 43.09355E3
     RateLimitGenTorque      150000.0;  // From Delft Research Controller (Github), For NREL 5MW: 15.0E3
-    KGen                    0.0317;    // From Delft Research Controller (Github), For NREL 5MW: 2.55764E-2;
+    KGen                    0.90;    // From Delft Research Controller (Github), For NREL 5MW: 2.55764E-2;
     GenTorqueControllerRelax   1.0;
 }
 
@@ -69,7 +69,7 @@ BladePitchControllerParams
     PitchMin    0;    // Suggested by S. Mulders from Delft Research Controller
     PitchMax    90.0; // Suggested by S. Mulders from Delft Research Controller
     PitchControlKP       0.0105; // Suggested by S. Mulders from Delft Research Controller
-    PitchControlKI       0.0028; // Suggested by S. Mulders from Delft Research Controller
+    PitchControlKI       0.28; // Suggested by S. Mulders from Delft Research Controller
     PitchControlKD       0.0;    // Suggested by S. Mulders from Delft Research Controller
     RateLimitBladePitch  10.0;   // From Delft Research Controller (Github)
 }
@@ -80,11 +80,11 @@ BladePitchControllerParams
 Airfoils
 (
     "Cylinder.dat"
-    "FFA_W3_241.dat"
-    "FFA_W3_301.dat"
-    "FFA_W3_360.dat"
-    "FFA_W3_480.dat"
-    "FFA_W3_600.dat"
+    "FFA_W3_600.dat" // "FFA_W3_241.dat"
+    "FFA_W3_480.dat" // "FFA_W3_301.dat"
+    "FFA_W3_360.dat" // "FFA_W3_360.dat"
+    "FFA_W3_301.dat" // "FFA_W3_480.dat"
+    "FFA_W3_241.dat" // "FFA_W3_600.dat"
 );
 
 
