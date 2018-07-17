@@ -23,7 +23,7 @@ globalProperties
 turbine0
 {
     turbineType         "DTU10MWRef";
-    baseLocation        (1500.0 1500.0 0.0);
+    baseLocation        (1000.0 1000.0 0.0);
     nRadial              64; // Unsure
     azimuthMaxDis        2.0; // Unsure
     nAvgSector           1; // Unsure
@@ -32,7 +32,7 @@ turbine0
     bladeUpdateType     "oldPosition"; // From turbineArrayProperties (OpenFAST)
     epsilon              20.0; // Should be twice the cell size
     forceScalar          1.0; // Unsure
-    inflowVelocityScalar 0.94; // Unsure
+    inflowVelocityScalar 1.0; // Unsure
     tipRootLossCorrType "Glauert"; // Unsure
     rotationDir         "cw"; // From turbineArrayProperties (OpenFAST)
     Azimuth              0.0; // From turbineArrayProperties (OpenFAST)

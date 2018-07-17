@@ -1,0 +1,145 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.0.x                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      turbineProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+NumBl                       3;    // Equal to ADMR
+TipRad                      89.2; // Equal to ADMR
+HubRad                      2.8;  // Equal to ADMR
+UndSling                    0.0;  // Equal to ADMR
+OverHang                   -7.1;  // Equal to ADMR
+NacelleLength               8; // ?? Same as 5MW
+NacelleFrontalArea          2; // ?? Same as 5MW
+NacelleCd                   0.5; // ?? Same as 5MW
+TowerHt                    115.63; // Equal to ADMR
+Twr2Shft                    2.75;  // Equal to ADMR
+ShftTilt                   -5.0;   // Equal to ADMR
+PreCone                   (-2.5 -2.5 -2.5); // Equal to ADMR
+GBRatio                    50.0;  // Equal to ADMR
+GBEfficiency                1.0;  // Equal to ADMR
+GenEfficiency               1.0;  // Equal to ADMR
+RatedRotSpeed              9.6;   // Equal to ADMR
+GenIner                   1500.5; // Equal to ADMR
+HubIner                   325.6709E3; // Equal to ADMR
+BladeIner                  45.64E6;   // Equal to ADMR
+GenTorqueControllerType    "fiveRegion"; // Equal to ADMR
+BladePitchControllerType   "PID";  // Equal to ADMR
+NacYawControllerType       "none"; // Equal to ADMR
+RotSpeedLimiter             false; // Equal to ADMR
+GenTorqueRateLimiter        true;  // Equal to ADMR 
+NacYawRateLimiter           true;  // Equal to ADMR
+BladePitchRateLimiter       false; // Equal to ADMR
+SpeedFilterCornerFrequency  2.5;   // Equal to ADMR
+
+
+GenTorqueControllerParams
+{
+    RateLimitGenTorque       15.0E4; // Equal to ADMR
+    SpeedTorqueTable
+    (
+        //      gen speed (RPM) gen torque (N-m)
+        (       200.00               0.0 )
+        (       300.00           90000.0 )
+        (       405.00          164025.0 )
+        (       480.00          164025.0 )
+    );
+    CutInGenSpeed           200.0;
+    Region2StartGenSpeed    300.0;
+    Region2EndGenSpeed      405.0;
+    CutInGenTorque          0.0;
+    RatedGenTorque          164025.0;
+    KGen                    1.0;
+}
+
+BladePitchControllerParams
+{
+    RateLimitBladePitch      10.000;
+    PitchMin                  0.000;
+    PitchMax                 90.000;
+    PitchK                    6.302336;
+    PitchControlKP            1.82620057;
+    PitchControlKI            0.78265750;
+    PitchControlKD            0.000;
+}
+
+NacYawControllerParams
+{
+    RateLimitNacYaw           2.0;
+}
+
+
+
+
+Airfoils
+(
+    "Cylinder.dat"
+    "FFA_W3_600.dat"
+    "FFA_W3_480.dat"
+    "FFA_W3_360.dat"
+    "FFA_W3_301.dat"
+    "FFA_W3_241.dat"
+);
+
+
+BladeData
+(
+	//  radius(m)   c(m)        twist(deg)  thickness(% of c)  userDef airfoil 
+	(	4.800000	5.380000	14.491060	1.000000			0		0	)
+	(	7.512000	5.422947	14.424209	0.980000			0		0	)
+	(	9.119000	5.503171	14.260414	0.950000			0		0	)
+	(	10.275000	5.577011	14.043888	0.930000			0		1	)
+	(	11.658000	5.678866	13.581343	0.870000			0		1	)
+	(	13.258000	5.802144	12.908756	0.800000			0		1	)
+	(	15.068000	5.937015	11.908994	0.730000			0		1	)
+	(	17.075000	6.063689	10.680366	0.600000			0		2	)
+	(	19.267000	6.157123	9.479599	0.540000			0		2	)
+	(	21.633000	6.201273	8.385097	0.470000			0		3	)
+	(	24.156000	6.191868	7.606940	0.430000			0		3	)
+	(	26.823000	6.128953	6.957972	0.380000			0		3	)
+	(	29.617000	6.013883	6.369216	0.360000			0		4	)
+	(	32.521000	5.854190	5.809149	0.330000			0		4	)
+	(	35.519000	5.657992	5.254826	0.310000			0		4	)
+	(	38.591000	5.434810	4.691180	0.290000			0		4	)
+	(	41.720000	5.190131	4.087893	0.280000			0		5	)
+	(	44.886000	4.929373	3.445390	0.270000			0		5	)
+	(	48.072000	4.658367	2.790276	0.265000			0		5	)
+	(	51.257000	4.383529	2.125135	0.260000			0		5	)
+	(	54.423000	4.110851	1.481714	0.250000			0		5	)
+	(	57.550000	3.844928	0.868340	0.245000			0		5	)
+	(	60.620000	3.588651	0.294717	0.240000			0		5	)
+	(	63.615000	3.344616	-0.221191	0.240000			0		5	)
+	(	66.516000	3.115337	-0.704843	0.240000			0		5	)
+	(	69.306000	2.902838	-1.120529	0.240000			0		5	)
+	(	71.968000	2.707497	-1.517145	0.240000			0		5	)
+	(	74.487000	2.529161	-1.876009	0.240000			0		5	)
+	(	76.847000	2.364962	-2.210462	0.240000			0		5	)
+	(	79.034000	2.200110	-2.520387	0.240000			0		5	)
+	(	81.034000	2.018238	-2.797971	0.240000			0		5	)
+	(	82.837000	1.811887	-3.032812	0.240000			0		5	)
+	(	84.431000	1.536297	-3.220965	0.240000			0		5	)
+	(	85.806000	1.138400	-3.369622	0.240000			0		5	)
+	(	86.955000	1.138400	-3.427960	0.240000			0		5	)
+	(	87.870000	1.138400	-3.427960	0.240000			0		5	)
+	(	88.546000	1.138400	-3.427960	0.240000			0		5	)
+);
+
+
+TowerData
+(
+//  height(m)   c(m)    twist(deg)  thickness(% of c)   userDef  airfoil
+    (0.0         8.30    0.0        1.0                 0        0)
+    (50.0        8.30    0.0        1.0                 0        0) // Just a guess. Probably not very important...
+    (115.63      5.50    0.0        1.0                 0        0)
+);
