@@ -22,7 +22,7 @@ globalProperties
  
 turbine0
 {
-    turbineType                      "DTU10MWALM";
+    turbineType                      "DTU10MWRef_ALM2";
     includeNacelle                    false;
     includeTower                      false;
     baseLocation                     (1000.0 1000.0 0.0);
@@ -50,7 +50,7 @@ turbine0
     rotationDir                      "cw";
     Azimuth                           0.0;
     RotSpeed                          7.2;
-    TorqueGen                         0.0;
+    TorqueGen                         100000.0;
     Pitch                             0.0;
     NacYaw                          270.0;
     fluidDensity                      1.23;
