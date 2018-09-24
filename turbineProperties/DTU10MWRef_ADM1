@@ -53,7 +53,7 @@ GenTorqueControllerParams
     CutInGenTorque          0.0;       // From Delft Research Controller (Github)
     RatedGenTorque          198943.6;  // From Delft Research Controller (Github), For NREL 5MW: 43.09355E3
     RateLimitGenTorque      150000.0;  // From Delft Research Controller (Github), For NREL 5MW: 15.0E3
-    KGen                    0.90;    // From Delft Research Controller (Github), For NREL 5MW: 2.55764E-2;
+    KGen                    1.15;      // Tuned in accordance with FAST simulation results. For NREL 5MW: 2.55764E-2;
     GenTorqueControllerRelax   1.0;
 }
 
