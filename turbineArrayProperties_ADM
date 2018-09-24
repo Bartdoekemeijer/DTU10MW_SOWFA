@@ -30,7 +30,7 @@ turbine0
     pointDistType       "uniform"; // From turbineArrayProperties (OpenFAST)
     pointInterpType     "linear"; // From turbineArrayProperties (OpenFAST)
     bladeUpdateType     "oldPosition"; // From turbineArrayProperties (OpenFAST)
-    epsilon              12.0; // Unsure: tuned in accordance with FAST simulation results
+    epsilon              12.0; // Unsure: tuned in accordance with FAST simulation results. 12.0 for 10x10x10 mesh, 16.0 for 15x15x15
     forceScalar          1.30; // Unsure: tuned in accordance with FAST simulation results
     inflowVelocityScalar 1.0; // Unsure
     tipRootLossCorrType "Glauert"; // Unsure
