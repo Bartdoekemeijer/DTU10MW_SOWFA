@@ -22,10 +22,10 @@ globalProperties
  
 turbine0
 {
-    turbineType                      "DTU10MWRef_ALM2";
-    includeNacelle                    false;
-    includeTower                      false;
-    baseLocation                     (1000.0 1000.0 0.0);
+    turbineType                      "DTU10MWRef";
+    includeNacelle                    true;
+    includeTower                      true;
+    baseLocation                     (500.0 500.0 0.0);
     numBladePoints                    40;
     numNacellePoints                  10;
     numTowerPoints                    40;
@@ -41,17 +41,19 @@ turbine0
     nacelleForceProjectionType       "diskGaussian";
     towerForceProjectionType         "advanced";
     bladeForceProjectionDirection    "localVelocityAligned";
-    bladeEpsilon                     (8.0 0.0 0.0); //(4.41 0.0 0.0);
-    nacelleEpsilon                   (4.0 4.0 0.0);
-    towerEpsilon                     (4.0 4.0 0.0);
+    bladeEpsilon                     (2.5 0.0 0.0);
+    nacelleEpsilon                   (2.5 2.5 0.0);
+    towerEpsilon                     (2.5 2.5 0.0);
     nacelleSampleDistance             1.0;
     towerSampleDistance               3.5;
-    tipRootLossCorrType              "Glauert";
+    tipRootLossCorrType              "none";
+    forceScalar                      1.15;
     rotationDir                      "cw";
     Azimuth                           0.0;
-    RotSpeed                          7.2;
-    TorqueGen                         100000.0;
+    RotSpeed                          7.5;
+    TorqueGen                         0.0;
     Pitch                             0.0;
     NacYaw                          270.0;
     fluidDensity                      1.23;
+    velocityDragCorrType              "none";
 }

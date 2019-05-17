@@ -38,7 +38,7 @@ GenTorqueControllerType    "fiveRegion"; // Equal to ADMR
 BladePitchControllerType   "PID";  // Equal to ADMR
 NacYawControllerType       "none"; // Equal to ADMR
 RotSpeedLimiter             false; // Equal to ADMR
-GenTorqueRateLimiter        true;  // Equal to ADMR 
+GenTorqueRateLimiter        false;  // Equal to ADMR 
 NacYawRateLimiter           true;  // Equal to ADMR
 BladePitchRateLimiter       false; // Equal to ADMR
 SpeedFilterCornerFrequency  2.5;   // Equal to ADMR
@@ -60,7 +60,7 @@ GenTorqueControllerParams
     Region2EndGenSpeed      405.0;
     CutInGenTorque          0.0;
     RatedGenTorque          164025.0;
-    KGen                    1.0;
+    KGen                    1.15;
 }
 
 BladePitchControllerParams
